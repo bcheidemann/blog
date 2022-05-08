@@ -1,6 +1,6 @@
 ---
 title: Deno 1.21 – One Giant Leap for Testing
-date: 2022-01-08
+date: 2022-05-08
 ---
 
 The release of Deno 1.21 marks a huge step forward for testing. It includes features such as snapshot testing (which I worked on personally), a BDD style test runner, and mocking utilities. Let's do a deep dive into why these features are so important for Deno!
