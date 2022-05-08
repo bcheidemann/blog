@@ -79,8 +79,8 @@
   <meta name="twitter:image" content={ogImage} />
 </svelte:head>
 
-<article class="relative">
-  <h1 class="!mt-0 !mb-2">
+<article class="relative" aria-labelledby="article-title">
+  <h1 class="!mt-0 !mb-2" id="article-title">
     <a class="!font-medium" href={$page.url.pathname}>
       {title}
     </a>
@@ -98,12 +98,12 @@
     <svelte:component this={component} />
 
     <!-- table of contents -->
-    <div class="hidden xl:block absolute not-prose left-[100%]" aria-label="Table of Contents">
+    <nav class="hidden xl:block absolute not-prose left-[100%]" aria-label="Table of Contents">
       <div class="fixed z-10 px-4 py-2 ml-8 top-[4.5rem]">
         <!-- ignore h1 tags as they should only be used for the post title -->
         <ToC allowedHeadings={['h2', 'h3', 'h4', 'h5', 'h6']} />
       </div>
-    </div>
+    </nav>
   </div>
 </article>
 

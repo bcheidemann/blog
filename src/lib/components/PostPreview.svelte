@@ -6,14 +6,14 @@
   export let small = false
 </script>
 
-<div class="flex flex-col">
+<article class="flex flex-col" aria-labelledby="article-title">
   <div>
     {#if !small}
-      <h1 class="!mt-0 !mb-2">
+      <h3 class="!mt-0 !mb-2" id="article-title">
         <a href={`/posts/${post.slug}`}>{post.title}</a>
-      </h1>
+      </h3>
     {:else}
-      <h3 class="!mt-0 !mb-2">
+      <h3 class="!mt-0 !mb-2" id="article-title">
         <a href={`/posts/${post.slug}`}>{post.title}</a>
       </h3>
     {/if}
@@ -29,4 +29,4 @@
       <ButtonLink href={`/posts/${post.slug}`}>Read More</ButtonLink>
     </div>
   </slot>
-</div>
+</article>

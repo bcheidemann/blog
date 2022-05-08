@@ -11,7 +11,7 @@
   function updateHeadings() {
     const nodes = [
       // Exclude h1 as those should be reserved for the post title
-      ...document.querySelectorAll(`article :where(${allowedHeadings.join(', ')}):not(#__sections)`)
+      ...document.querySelectorAll(`article :where(${allowedHeadings.join(', ')}):not(#__sections):not(#article-title)`)
     ]
     const depths = nodes.map((node) => Number(node.nodeName[1]))
     const minDepth = Math.min(...depths)
@@ -46,9 +46,9 @@
     const visibleIndex =
       headings.findIndex(
         (heading) => heading.node.offsetTop + heading.node.clientHeight > scrollY
-      ) - 1
+      )
 
-    activeHeading = headings[visibleIndex]
+    activeHeading = headings[visibleIndex === -1 ? headings.length - 1 : visibleIndex - 1]
 
     const pageHeight = document.body.scrollHeight
     const scrollProgress = (scrollY + window.innerHeight) / pageHeight

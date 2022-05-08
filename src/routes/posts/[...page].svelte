@@ -64,11 +64,14 @@
 </svelte:head>
 
 <div class="flex flex-col flex-grow">
-  <div class="flex-grow divide-y divide-slate-300 dark:divide-slate-700">
+  <h1>Posts</h1>
+
+  <div class="flex-grow">
     {#each posts as post}
-      <div class="py-8 first:pt-0">
+      <div class="py-6 first:pt-2">
         <PostPreview {post} />
       </div>
+      <hr class="my-1" />
     {/each}
   </div>
 
