@@ -34,6 +34,8 @@ module.exports = {
                 borderColor: theme('colors.slate.300')
               },
               ul: {
+                paddingLeft: '0 !important',
+                paddingRight: '0 !important',
                 marginTop: '0 !important',
                 marginBottom: '0 !important'
               },
@@ -47,6 +49,7 @@ module.exports = {
               },
               'h1,h2,h3,h4,h5,h6': {
                 a: {
+                  fontWeight: 'inherit',
                   color: 'inherit',
                   textDecoration: 'none'
                 }
