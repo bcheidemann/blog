@@ -40,15 +40,6 @@ const posts = Object.entries(import.meta.globEager('/posts/**/*.md'))
       // (needed to do correct dynamic import in posts/[slug].svelte)
       isIndexFile: filepath.endsWith('/index.md'),
 
-      // format date as yyyy-MM-dd
-      date: post.metadata.date
-        ? format(
-            // offset by timezone so that the date is correct
-            addTimezoneOffset(new Date(post.metadata.date)),
-            'yyyy-MM-dd'
-          )
-        : undefined,
-
       // the svelte component
       component: post.default,
       customPreview: post.metadata.preview
@@ -74,7 +65,7 @@ const posts = Object.entries(import.meta.globEager('/posts/**/*.md'))
     }
   })
   // sort by date
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .sort((a, b) => b.articleId - a.articleId)
   // add references to the next/previous post
   .map((post, index, allPosts) => ({
     ...post,

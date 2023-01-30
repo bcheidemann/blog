@@ -40,13 +40,6 @@ export async function get() {
           .map(
             (post) => xml`<url>
               <loc>${postsUrl}/${post.slug}</loc>
-              <lastmod
-                >${
-                  post.updated
-                    ? new Date(post.updated).toISOString()
-                    : new Date(post.date).toISOString()
-                }</lastmod
-              >
               <changefreq>monthly</changefreq>
               <priority>1.0</priority>
             </url>`

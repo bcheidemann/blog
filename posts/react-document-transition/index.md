@@ -1,6 +1,9 @@
 ---
 title: Document Transition API - Creating a React Hook
-date: 2022-05-12
+categories:
+  - React
+  - Web Platform
+articleId: 1
 ---
 
 In November 2020, the [Web Incubator Community Group (WICG)](https://wicg.io/) proposed the [shared element API](https://github.com/WICG/shared-element-transitions). It has since been implemented by the Google Chrome team and is available behind a feature flag in [Chrome Canary](https://www.google.com/intl/en_uk/chrome/canary/). Naturally, I tried hacking this into a React hook...

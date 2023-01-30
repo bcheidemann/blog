@@ -31,7 +31,6 @@
 </script>
 
 <script>
-  import { format, parseISO } from 'date-fns'
   import { page } from '$app/stores'
   import ButtonLink from '$lib/components/ButtonLink.svelte'
   import { name, website } from '$lib/info'
@@ -42,8 +41,8 @@
   export let component
 
   // metadata
+  export let categories
   export let title
-  export let date
   export let preview
   export let readingTime
   export let slug
@@ -85,12 +84,17 @@
       {title}
     </a>
   </h1>
-  <div class="opacity-70">
-    <time datetime={new Date(parseISO(date)).toISOString()}
-      >{format(new Date(parseISO(date)), 'MMMM d, yyyy')}</time
-    >
-    •
-    <span>{readingTime}</span>
+  <div class="mt-4 opacity-70">
+    <div class="flex gap-x-4 gap-y-4 flex-wrap justify-between opacity-70">
+      <span class="text-xl truncate">{readingTime}</span>
+      <div class="flex wrap">
+        {#each categories as category}
+          <span class="mr-2 px-4 py-1 shadow-md shadow-slate-400 dark:shadow-black rounded-full bg-slate-500 text-white text-sm truncate">
+            {category}
+          </span>
+        {/each}
+      </div>
+    </div>
   </div>
 
   <div class="relative">
