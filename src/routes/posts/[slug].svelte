@@ -105,7 +105,7 @@
     <nav class="hidden xl:block absolute not-prose left-[100%]" aria-label="Table of Contents">
       <div class="fixed z-10 px-4 py-2 ml-8 top-[4.5rem]">
         <!-- ignore h1 tags as they should only be used for the post title -->
-        <ToC allowedHeadings={['h2', 'h3', 'h4', 'h5', 'h6']} />
+        <ToC allowedHeadings={['h2', 'h3']} />
       </div>
     </nav>
   </div>
