@@ -1,5 +1,21 @@
 # What I'm Working On
 
+## Open Source Development
+
+You can check out my [GitHub](https://github.com/bcheidemann?tab=repositories) for my personal projects. Additionally, I've contributed to a variety of Open Source projects, including [Next.js](https://nextjs.org/), [Deno](https://deno.com/) and [STC](https://github.com/dudykr/stc), among others.
+
+## CatLord - Minecraft Server
+
+The CatLord Minecraft server is a hobby project for the benefit of friends and family. We now have a community of around 15 casual players and host several different worlds.
+
+We also host servers for YouTubers and streamers, and are working with a group of content creators on a charity event for Outright International, an LGBTIQ human rights organization.
+
+CatLordMC has been a fascinating insight into the world of high performance server infrastructure, Java programming, systems administration and many other things which I don't (normally) do as part of my day job.
+
+Learn more at [catlord.co.uk](https://catlord.co.uk/) and if you want to join the server feel free to email me at [ben@heidemann.dev](mailto:ben@heidemann.dev)!
+
+<!-- # What I'm Working On
+
 I have many hobby projects in various conditions, ranging from those which I actively maintain to those which I have actively abandoned in a state of complete disrepair and will likely never see the light of day... 😋
 
 Here is a selection of those projects that have managed to avoid the latter fate!
@@ -26,4 +42,4 @@ Learn more about Deno at [deno.land](https://deno.land/) or to find out more abo
 
 The CatLord Minecraft server is a hobby project which I run with my Dad. It is a private server which we originally operated exclusively for friends and family. We now have a community of around 15 players for whom we run three separate servers: a survival world, creative world, and a legacy server for previous worlds we played on. This project has been a fascinating insight into the world of server infrastructure, Java programming, systems administration and many other things which I don't (normally) do as part of my day job.
 
-Learn more at [catlord.co.uk](https://catlord.co.uk/) and if you want to join the server feel free to email me at [ben@heidemann.dev](mailto:ben@heidemann.dev)!
+Learn more at [catlord.co.uk](https://catlord.co.uk/) and if you want to join the server feel free to email me at [ben@heidemann.dev](mailto:ben@heidemann.dev)! -->
