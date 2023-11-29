@@ -36,9 +36,9 @@ Snapshot testing is a relatively recent addition to the JavaScript ecosystem, be
 
 It offers a solution to many common problems in software testing:
 
-1.	Complexity
-2.	Maintainability
-3.	Readability
+1. Complexity
+2. Maintainability
+3. Readability
 
 To understand how, we need to touch on the basics of how traditional unit tests work. A good practice in unit testing is to follow the “arrange, act, assert” pattern. The “arrange” step involves setting out some input data, then this input is fed into a unit of code in the “act” step, and finally, assertions are made about the output in the “assert” step.
 
@@ -46,18 +46,18 @@ For example, if we have a function called “addOne”, we might write a which l
 
 ```ts
 // Arrange
-const input = 1;
+const input = 1
 
 // Act
-const result = addOne(input);
+const result = addOne(input)
 
 // Assert
-assertEquals(result, 2);
+assertEquals(result, 2)
 ```
 
 This test will fail if the result is of “addOne” is anything other than 2, alerting us to a problem in our code.
 
-This works well with simple functions like “addOne”. But what happens when your expected output is, for example, the statically rendered HTML for a webpage? As a rule of thumb, a unit test will always be at least as many lines long as the number of things you want to assert about the output.  This means that to fully cover our HTML output, our test could easily be hundreds of lines long, and we might require dozens of tests like this to test all the possible input cases.
+This works well with simple functions like “addOne”. But what happens when your expected output is, for example, the statically rendered HTML for a webpage? As a rule of thumb, a unit test will always be at least as many lines long as the number of things you want to assert about the output. This means that to fully cover our HTML output, our test could easily be hundreds of lines long, and we might require dozens of tests like this to test all the possible input cases.
 
 Adding that much code to test a single unit of code is inadvisable. Longer tests are harder to read, harder to maintain, take longer to write, and cost more money. For this reason, many companies have historically elected not to test their frontend code. This has resulted in many bugs making it into production which could have been avoided by having concise, maintainable, and effective unit tests.
 
@@ -75,34 +75,34 @@ As of version 1.21 of Deno, snapshot testing is now available via the standard l
 
 ```ts
 // example_test.ts
-import { assertSnapshot } from "https://deno.land/std@0.138.0/testing/snapshot.ts";
+import { assertSnapshot } from 'https://deno.land/std@0.138.0/testing/snapshot.ts'
 
-Deno.test("isSnapshotMatch", async (t) => {
+Deno.test('isSnapshotMatch', async (t) => {
   // arrange
-  const title = "Article Title";
-  const summary = "This is a short summary of the article.";
+  const title = 'Article Title'
+  const summary = 'This is a short summary of the article.'
 
   // act
   const html = renderArticleCard({
     title,
-    summary,
-  });
+    summary
+  })
 
   // assert
-  await assertSnapshot(t, html);
-});
+  await assertSnapshot(t, html)
+})
 ```
 
 ```js
 // __snapshots__/example_test.ts.snap
-export const snapshot = {};
+export const snapshot = {}
 
 snapshot[`isSnapshotMatch 1`] = `
 "<article>
   <h3>Article Title</h3>
   <p>This is a short summary of the article.</p>
 </article>"
-`;
+`
 ```
 
 For more information on snapshot testing see the [Deno manual](https://deno.land/manual/testing/snapshot_testing).
@@ -118,40 +118,40 @@ BDD (Behaviour Driven Development) style testing focuses on grouping tests into 
 In case you are unfamiliar with the "describe/it" format, it would typically look something like the following:
 
 ```js
-describe("addOne", () => {
-  it("should add one to a positive integer", () => {
+describe('addOne', () => {
+  it('should add one to a positive integer', () => {
     // Arrange
-    const input = 1;
+    const input = 1
 
     // Act
-    const result = addOne(input);
+    const result = addOne(input)
 
     // Assert
-    assertEquals(result, 2);
-  });
+    assertEquals(result, 2)
+  })
 
-  it("should add one to a negative integer", () => {
+  it('should add one to a negative integer', () => {
     // Arrange
-    const input = -1;
+    const input = -1
 
     // Act
-    const result = addOne(input);
+    const result = addOne(input)
 
     // Assert
-    assertEquals(result, 0);
-  });
+    assertEquals(result, 0)
+  })
 
-  it("should fail when given a string as an input", () => {
+  it('should fail when given a string as an input', () => {
     // Arrange
-    const input = "some string";
+    const input = 'some string'
 
     // Act
-    const action = () => addOne(input);
+    const action = () => addOne(input)
 
     // Assert
-    assertThrows(action);
-  });
-});
+    assertThrows(action)
+  })
+})
 ```
 
 This style allows developers to more clearly and easily organise their tests and is a common choice for unit tests and automation tests.
@@ -159,17 +159,17 @@ This style allows developers to more clearly and easily organise their tests and
 In addition, BDD style frameworks typically offer “hooks” to reduce the amount of duplicate code needed for setting up a test and cleaning up after a test has run. For example:
 
 ```js
-describe("SingletonClass", () => {
+describe('SingletonClass', () => {
   beforeEach(() => {
-    SingletonClass.init();
-  });
+    SingletonClass.init()
+  })
 
   afterEach(() => {
-    SingletonClass.reset();
-  });
+    SingletonClass.reset()
+  })
 
   // --snip--
-});
+})
 ```
 
 As of version 1.21 of Deno, a BDD style test runner is now available via the standard library. This is an important contribution as it is a style of test which many developers have come to expect due to its prevalence. To learn more about it, see the the [Deno manual](https://deno.land/manual/testing/behavior_driven_development).
@@ -188,10 +188,8 @@ Lets say our code looks like this:
 
 ```js
 async function deleteEverything() {
-  const files = await FileSystem.getListOfFiles();
-  await Promise.all(
-    files.map(async (file) => await FileSystem.delete(file))
-  );
+  const files = await FileSystem.getListOfFiles()
+  await Promise.all(files.map(async (file) => await FileSystem.delete(file)))
 }
 ```
 
@@ -202,43 +200,43 @@ We have a few options here. Firstly, we could refactor our code to make it easie
 Either of these options may be acceptable to you. But we do have a third option. Consider the following test:
 
 ```js
-describe("deleteEverything", () => {
-  let getListOfFilesStub;
-  let deleteSpy;
-  let deleteStub;
+describe('deleteEverything', () => {
+  let getListOfFilesStub
+  let deleteSpy
+  let deleteStub
 
-  beforeAll("setup mocks", () => {
-    getListOfFilesStub = stub(FileSystem, "getListOfFiles", () => [
-      "/first.file.txt",
-      "/second.file.txt",
-      "/third.file.txt",
-    ]);
-    deleteSpy = spy();
-    deleteStub = stub(FileSystem, "delete", deleteSpy);
-  });
+  beforeAll('setup mocks', () => {
+    getListOfFilesStub = stub(FileSystem, 'getListOfFiles', () => [
+      '/first.file.txt',
+      '/second.file.txt',
+      '/third.file.txt'
+    ])
+    deleteSpy = spy()
+    deleteStub = stub(FileSystem, 'delete', deleteSpy)
+  })
 
-  afterAll("restore mocks", () => {
-    getListOfFilesStub.restore();
-    deleteStub.restore();
-  });
+  afterAll('restore mocks', () => {
+    getListOfFilesStub.restore()
+    deleteStub.restore()
+  })
 
-  it("should delete everything", async () => {
+  it('should delete everything', async () => {
     // Act
-    await deleteEverything();
+    await deleteEverything()
 
     // Assert
     assertSpyCall(deleteSpy, 0, {
-      args: ["/first.file.txt"],
-    });
+      args: ['/first.file.txt']
+    })
     assertSpyCall(deleteSpy, 1, {
-      args: ["/second.file.txt"],
-    });
+      args: ['/second.file.txt']
+    })
     assertSpyCall(deleteSpy, 2, {
-      args: ["/third.file.txt"],
-    });
-    assertSpyCalls(deleteSpy, 3);
-  });
-});
+      args: ['/third.file.txt']
+    })
+    assertSpyCalls(deleteSpy, 3)
+  })
+})
 ```
 
 The above test asserts that `FileSystem.delete` is called once for each of the files returned by `FileSystem.getListOfFiles`. It is written in the BDD style we [discussed above](#bdd-style-testing), using some hooks to setup and tidy up the mocks.

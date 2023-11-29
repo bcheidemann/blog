@@ -37,12 +37,12 @@ Generally, I prefer to structure my tests in a BDD style, as is common in the Ja
 describe('someFunction', () => {
   it('should do x', () => {
     // Test implementation
-  });
+  })
 
   it('should do x', () => {
     // Test implementation
-  });
-});
+  })
+})
 ```
 
 ### Arrange, Act, Assert
@@ -59,15 +59,15 @@ For example:
 describe('isUserActive', () => {
   it('should return true when the user status is active', () => {
     // Arrange
-    const user = userFactory.build({ status: 'active' });
+    const user = userFactory.build({ status: 'active' })
 
     // Act
-    const result = isUserActive(user);
+    const result = isUserActive(user)
 
     // Assert
-    expect(result).toEqual(true);
-  });
-});
+    expect(result).toEqual(true)
+  })
+})
 ```
 
 ---
@@ -104,9 +104,10 @@ For instance, a method to create a user would be fairly useless if it didn't mak
 One way to test the side effects would be to spin up an instance of our database every time we run our tests. However, this is neither practical, nor desirable because our unit test should not depend on external parts of our system. Instead, these should be tested by other unit tests. This has the following benefits.
 
 1. #### Isolation
+
    Mocking enables us to isolate our test cases from unrelated changes to other parts of our application. These should be covered by different unit tests, so there is no need for unit tests covering consuming code to also fail. Isolating our tests in such a way that they only fail when the behavior of the unit under test changes ensures developers can quickly and efficiently identify issues and avoid spending time debugging working parts of the system.
 
-   *Note: It is important to test for changes in the interfaces between code, particularly when writing isolated tests. Ideally, this should be handled by static type checking, rather than by unit tests.*
+   _Note: It is important to test for changes in the interfaces between code, particularly when writing isolated tests. Ideally, this should be handled by static type checking, rather than by unit tests._
 
 2. #### Simplicity
    By mocking external components of our system, we simplify our test setup and tear down. For example, if we want to test the resilience of our code to exceptions from an external component (e.g. database errors), we can simply mock a rejection, rather than trying to find a way to cause a rejection some other way.
@@ -114,14 +115,15 @@ One way to test the side effects would be to spin up an instance of our database
 Despite the benefits of mocking certain parts of our code, mocking the wrong parts can cause problems. The most common example is mocking methods which are not part of the public interface. This can be tempting, since mocking a private method can sometimes simplify test cases. However, it has the following downsides.
 
 1. #### Implementation Coupling
+
    An over-reliance on mocking couples our test case to a specific implementation. This is particularly pronounced when we mock parts of our internal API (e.g. private methods), since we are much more likely to refactor this than our public interface.
 
 2. #### Degraded Test Sensitivity
-   Mocking has the downside that it "pretends" to our test that parts of our code behave in a certain way. When the behavior of the mocked code changes, this may have an impact on the behavior of the tested code. However, because we mocked the changing code, our test may not detect unintentional changes in behavior. This is why we typically only want to mock parts of our code which are: covered by their own unit tests, loosely coupled to the software unit under test, and where the interface is strictly enforced (e.g. by static type checking). For this reason, it is best to avoid mocking internal implementation details such as private methods. 
+   Mocking has the downside that it "pretends" to our test that parts of our code behave in a certain way. When the behavior of the mocked code changes, this may have an impact on the behavior of the tested code. However, because we mocked the changing code, our test may not detect unintentional changes in behavior. This is why we typically only want to mock parts of our code which are: covered by their own unit tests, loosely coupled to the software unit under test, and where the interface is strictly enforced (e.g. by static type checking). For this reason, it is best to avoid mocking internal implementation details such as private methods.
 
 In summary, mocking certain parts of our code is essential to ensure our unit tests do not become tightly coupled to unrelated parts of our code. However, excessive mocking can result in tightly coupling our code to the implementation of our code and degrade the quality of our test.
 
-*Note: Following the principles set out above means our unit tests cannot ensure that all our individual components come together to form a functional system. Although this is also important, testing the macro-level behavior is the remit of end-to-end testing, not unit testing.*
+_Note: Following the principles set out above means our unit tests cannot ensure that all our individual components come together to form a functional system. Although this is also important, testing the macro-level behavior is the remit of end-to-end testing, not unit testing._
 
 ### Implementation Assertions
 
@@ -143,20 +145,20 @@ To better understand this, let's pretend we're building a new messaging app. It'
 // src/permissions.ts
 export enum UserPermissions {
   InviteUsers = 'InviteUsers',
-  SendMessages = 'SendMessages',
+  SendMessages = 'SendMessages'
 }
 ```
 
 ```ts
 // src/services.ts
 export class UserService {
-  private usersRepository: IUsersRepository;
+  private usersRepository: IUsersRepository
 
   public async createUser(name: string) {
     await this.usersRepository.put({
       name,
-      permissions: Object.values(UserPermissions),
-    });
+      permissions: Object.values(UserPermissions)
+    })
   }
 }
 ```
@@ -168,28 +170,28 @@ Now let's write our test case:
 ```ts
 // src/__test__/services.test.ts
 describe('UserService', () => {
-  let instance: UserService;
+  let instance: UserService
 
   beforeEach(() => {
     // Instantiate user service with mock users repository
-  });
+  })
 
   describe('createUser', () => {
     it('Should create the user in the users repository', async () => {
       // Arrange
-      const name = 'Mr Test';
+      const name = 'Mr Test'
 
       // Act
-      instance.createUser(name);
+      instance.createUser(name)
 
       // Assert
       expect(instance.usersRepository.put).toHaveBeenCalledWith({
         name,
-        permissions: Object.values(UserPermissions),
+        permissions: Object.values(UserPermissions)
       })
-    });
-  });
-});
+    })
+  })
+})
 ```
 
 Can you spot the mistake in our test? It's quite subtle so maybe it's not obvious yet. Let's walk through a scenario which will hopefully reveal the issue.
@@ -203,7 +205,7 @@ Since we've already implemented a permissions system, we decide to re-use it by 
 export enum UserPermissions {
   InviteUsers = 'InviteUsers',
   SendMessages = 'SendMessages',
-  SuperAdmin = 'SuperAdmin',
+  SuperAdmin = 'SuperAdmin'
 }
 ```
 
@@ -213,7 +215,7 @@ Upon finishing the implementation of this feature and testing it locally, we run
 
 Having now deployed our code to the test environment, QA confirms that an existing user account (which doesn't have the permission) is unable to delete or ban other users. When the permission is added, the user becomes a "super-admin" with the power to delete or ban anyone on the platform. Tests passed, next stop, production!
 
-*Success! ... right?*
+_Success! ... right?_
 
 Not so fast! Some time after deploying the new feature to production, we decide to run an audit. Surprisingly, we find that we have many more super admins than expected. In fact, it seems that every single user account created after we released the super-admin feature, has the new permission. What wen't wrong?
 
@@ -223,14 +225,14 @@ Well, as you may already have guessed, the `UserService.createUser` method is at
 // src/services.ts
 await this.usersRepository.put({
   name,
-  permissions: Object.values(UserPermissions),
+  permissions: Object.values(UserPermissions)
   //          |____________bug_______________|
-});
+})
 ```
 
 This probably isn't an ideal implementation, but it's virtually a 100% guarantee that not all of the code in a sufficiently sized project will be implemented in an ideal manner. This is an inescapable reality of software development, and a problem outside the scope of this article.
 
-The bigger issue here is that ***our unit test didn't catch this error***.
+The bigger issue here is that **_our unit test didn't catch this error_**.
 
 If we examine the unit test, we can see that it duplicates the exact same logic as the `createUser` service method.
 
@@ -238,7 +240,7 @@ If we examine the unit test, we can see that it duplicates the exact same logic 
 // src/__test__/services.test.ts
 expect(instance.usersRepository.put).toHaveBeenCalledWith({
   name,
-  permissions: Object.values(UserPermissions),
+  permissions: Object.values(UserPermissions)
   //          |____________bug_______________|
 })
 ```
@@ -256,22 +258,22 @@ describe('ExampleService', () => {
   describe('exampleMethod', () => {
     it('Should test that some data we care about is returned', async () => {
       // Arrange
-      const input = 'example input';
+      const input = 'example input'
 
       // Act
-      const result = instance.exampleMethod(input);
+      const result = instance.exampleMethod(input)
 
       // Assert
       expect(result).toEqual({
         someDataWeCareAbout: 'explicit value',
-        someDataWeDoNotCareAbout: expect.any(),
+        someDataWeDoNotCareAbout: expect.any()
       })
-    });
-  });
-});
+    })
+  })
+})
 ```
 
-In the above test case, we explicitly signal that the test ***does not*** care about the value of `result.someDataWeDoNotCareAbout`.
+In the above test case, we explicitly signal that the test **_does not_** care about the value of `result.someDataWeDoNotCareAbout`.
 
 ## Precision
 
@@ -299,28 +301,28 @@ One trivial example of how this may happen, is when mocks are not properly reset
 describe('UserService', () => {
   const mockUserRepository = {
     getUserByUsername: jest.fn(),
-    createUser: jest.fn(),
-  };
+    createUser: jest.fn()
+  }
 
   describe('createUser', () => {
     it('should create a user', async () => {
-      mockUserRepository.getUserByUsername.mockResolvedValue(null);
+      mockUserRepository.getUserByUsername.mockResolvedValue(null)
 
-      await userService.createUser('user123');
+      await userService.createUser('user123')
 
-      expect(mockUserRepository.createUser).toHaveBeenCalled();
-    });
+      expect(mockUserRepository.createUser).toHaveBeenCalled()
+    })
 
     it('should not create a user when a user with the same username already exists', async () => {
-      const user = userFactory.build();
-      mockUserRepository.getUserByUsername.mockResolvedValue(user);
+      const user = userFactory.build()
+      mockUserRepository.getUserByUsername.mockResolvedValue(user)
 
-      await userService.createUser(user.username);
+      await userService.createUser(user.username)
 
-      expect(mockUserRepository.createUser).not.toHaveBeenCalled();
-    });
-  });
-});
+      expect(mockUserRepository.createUser).not.toHaveBeenCalled()
+    })
+  })
+})
 ```
 
 In this example, our second test will pass when run in isolation. However, if we run our first test case before the second, it will fail. This is because the `mockUserRepository.createUser` mock function has not been reset after our first test case, and the assertion that it was not called will no longer hold.
@@ -341,27 +343,27 @@ In the context of software testing, we can consider a test case to demonstrate e
 describe('User', () => {
   describe('joinGroup', () => {
     it('should add the user to the group', () => {
-      const user = new User();
+      const user = new User()
       const group = new MockGroup({
-        users: [],
-      });
+        users: []
+      })
 
-      user.joinGroup(group);
+      user.joinGroup(group)
 
-      expect(group.users).toHaveLength(1);
-    });
+      expect(group.users).toHaveLength(1)
+    })
 
     it('should not add the user to the group if they have already joined it', () => {
-      const user = new User();
+      const user = new User()
       const group = new MockGroup({
-        users: [user],
-      });
+        users: [user]
+      })
 
-      user.joinGroup(group);
+      user.joinGroup(group)
 
-      expect(group.users).toHaveLength(1);
-    });
-  });
+      expect(group.users).toHaveLength(1)
+    })
+  })
 })
 ```
 
@@ -370,26 +372,26 @@ While the following test cases do not demonstrate encapsulation:
 ```ts
 describe('User', () => {
   describe('joinGroup', () => {
-    const user = new User();
+    const user = new User()
     const group = new MockGroup({
-      users: [],
-    });
+      users: []
+    })
 
-    afterEach(() => group.reset());
+    afterEach(() => group.reset())
 
     it('should add the user to the group', () => {
-      user.joinGroup(group);
+      user.joinGroup(group)
 
-      expect(group.users).toHaveLength(1);
-    });
+      expect(group.users).toHaveLength(1)
+    })
 
     it('should not add the user to the group if they have already joined it', () => {
-      user.joinGroup(group);
-      user.joinGroup(group);
+      user.joinGroup(group)
+      user.joinGroup(group)
 
-      expect(group.users).toHaveLength(1);
-    });
-  });
+      expect(group.users).toHaveLength(1)
+    })
+  })
 })
 ```
 
@@ -400,21 +402,21 @@ I personally think it's useful to further abstract our concept of encapsulation,
 ```ts
 describe('AuthService', () => {
   const mockUserRepository = {
-    getUserByUsername: jest.fn(),
-  };
+    getUserByUsername: jest.fn()
+  }
 
   describe('login', () => {
     it('should return an auth token and a refresh token when an active user attempts to login', async () => {
-      const user = userFactory.build();
-      mockUserRepository.getUserByUsername.mockResolvedValue(user);
+      const user = userFactory.build()
+      mockUserRepository.getUserByUsername.mockResolvedValue(user)
 
-      const result = await authService.login(user.username, user.passwordHash);
+      const result = await authService.login(user.username, user.passwordHash)
 
-      expect(result.authToken).toBeJwtToken();
-      expect(result.refreshToken).toBeJwtToken();
-    });
-  });
-});
+      expect(result.authToken).toBeJwtToken()
+      expect(result.refreshToken).toBeJwtToken()
+    })
+  })
+})
 ```
 
 Although this test technically encapsulates all of the state on which it operates, the declaration of the state is being performed by code outside of the test case (the `userFactory`). This is fine for data which is not relevant to our test case (e.g. username, passwordHash, phoneNumber, etc), but because our test case depends on the users status being active, this data should be explicitly declared by our test case. We can modify our invocation of `userFactory` to explicitly declare the users status within our test case:
@@ -422,23 +424,23 @@ Although this test technically encapsulates all of the state on which it operate
 ```ts
 describe('AuthService', () => {
   const mockUserRepository = {
-    getUserByUsername: jest.fn(),
-  };
+    getUserByUsername: jest.fn()
+  }
 
   describe('login', () => {
     it('should return an auth token and a refresh token when an active user attempts to login', async () => {
       const user = userFactory.build({
-        status: 'active',
-      });
-      mockUserRepository.getUserByUsername.mockResolvedValue(user);
+        status: 'active'
+      })
+      mockUserRepository.getUserByUsername.mockResolvedValue(user)
 
-      const result = await authService.login(user.username, user.passwordHash);
+      const result = await authService.login(user.username, user.passwordHash)
 
-      expect(result.authToken).toBeJwtToken();
-      expect(result.refreshToken).toBeJwtToken();
-    });
-  });
-});
+      expect(result.authToken).toBeJwtToken()
+      expect(result.refreshToken).toBeJwtToken()
+    })
+  })
+})
 ```
 
 This make the meaning of our test explicit, and reduces the fragility of the test, since changing the default status of users generated with the `userFactory` will no longer cause the test to fail.
@@ -463,14 +465,14 @@ Tests must also run quickly enough that you can efficiently iterate. This is ess
 
 Sensitivity and specificity are terms I first learned in medical school. However, they apply equally well to software testing as they do to medicine. They are defined as follows.
 
- - **Sensitivity** (a.k.a. true positive rate) is the probability of a positive test result, given the condition being tested for is truly positive.
- - **Specificity** (a.k.a. true negative rate) is the probability of a negative test result, given the condition being tested for is truly negative.
+- **Sensitivity** (a.k.a. true positive rate) is the probability of a positive test result, given the condition being tested for is truly positive.
+- **Specificity** (a.k.a. true negative rate) is the probability of a negative test result, given the condition being tested for is truly negative.
 
 ![Sensitivity & Specificity](./specificity-sensitivity.svg)
 
 The above diagram is a visualization of sensitivity and specificity, and two closely related terms, positive predictive value (a.k.a precision) and negative predictive value.
 
-In medicine, tests check for a specific ***undesirable*** result (e.g. that a patient has a disease), while software tests check for a specific ***desirable*** result (e.g. that for certain inputs we get the correct outputs). However, with a little mental gymnastics, we can reframe software tests to better fit into the sensitivity/specificity model. Instead of thinking of software tests as asserting a specific behavior, we can think them as checking if a system ***does not*** behave as expected, given certain inputs. In this sense, a positive test result would be when the test fails, and a negative result would be a passing test.
+In medicine, tests check for a specific **_undesirable_** result (e.g. that a patient has a disease), while software tests check for a specific **_desirable_** result (e.g. that for certain inputs we get the correct outputs). However, with a little mental gymnastics, we can reframe software tests to better fit into the sensitivity/specificity model. Instead of thinking of software tests as asserting a specific behavior, we can think them as checking if a system **_does not_** behave as expected, given certain inputs. In this sense, a positive test result would be when the test fails, and a negative result would be a passing test.
 
 An ideal unit test would always fail (return a positive result) when the unit of code being tested behaves incorrectly, and always pass (return a negative result) when the unit of code behaves correctly. In other words, much like medical tests, it should have high sensitivity and specificity.
 
@@ -495,11 +497,11 @@ Furthermore, when low specificity test cases are repeatedly refactored, it risks
 
 Aside from the direct consequences of low specificity tests, as described above, there are also a number of indirect consequences. Some examples include:
 
- 1. Reduced team morale due to more time spent on test maintenance
- 2. New features take longer to implement due to more time spent on test maintenance
- 3. PRs tend to contain more code changes due to unnecessary refactoring of existing low specificity tests
- 4. PRs tend to include changes to test cases which are not directly related to the code change, making them harder to review
- 5. Developers are less likely to spend time writing high quality tests, to compensate for the time they need to spend refactoring existing tests
+1.  Reduced team morale due to more time spent on test maintenance
+2.  New features take longer to implement due to more time spent on test maintenance
+3.  PRs tend to contain more code changes due to unnecessary refactoring of existing low specificity tests
+4.  PRs tend to include changes to test cases which are not directly related to the code change, making them harder to review
+5.  Developers are less likely to spend time writing high quality tests, to compensate for the time they need to spend refactoring existing tests
 
 ---
 
@@ -507,7 +509,7 @@ Aside from the direct consequences of low specificity tests, as described above,
 
 Software development metrics come in many shapes and sizes, from simple metrics like lines of code, to more complex metrics like cyclomatic complexity [[1]](#references). These can be categorized into internal metrics (e.g. coupling, modularity, test coverage level) and external metrics (e.g. cost, quality, reliability). Generally, software teams want to optimize for external metrics, since these generally determine the success or failure of a commercial project. However, it is generally easier to directly measure and control internal metrics [[2]](#references).
 
-Internal metrics such as test code coverage have been observed to be predictive of external metrics such as quality [[3]](#references). This can lead  development teams to try and optimize for certain internal metrics, with the hope that it will improve external metrics. However, Goodhart's law suggests that treating a measure as a target can have unintended consequences and reduce the validity of the measure [[4]](#references).
+Internal metrics such as test code coverage have been observed to be predictive of external metrics such as quality [[3]](#references). This can lead development teams to try and optimize for certain internal metrics, with the hope that it will improve external metrics. However, Goodhart's law suggests that treating a measure as a target can have unintended consequences and reduce the validity of the measure [[4]](#references).
 
 Although I am not aware of any published research papers into the validity of Goodhart's law in the context of software development, my personal experience across a range of projects leads me to believe that enforcing strict code coverage requirements tends to lead to lower quality tests.
 
@@ -547,28 +549,28 @@ describe('UserService', () => {
     it('should return an active user', () => {
       const user = userFactory.build({
         id: 1,
-        status: 'active',
-      });
-      repository.getActiveUserById.mockResolvedValue(user);
+        status: 'active'
+      })
+      repository.getActiveUserById.mockResolvedValue(user)
 
-      const result = service.getUserById(1);
+      const result = service.getUserById(1)
 
-      expect(result).toEqual(user);
-    });
+      expect(result).toEqual(user)
+    })
 
     it('should return null if users status is not active', () => {
       const user = userFactory.build({
         id: 1,
-        status: 'suspended',
-      });
-      repository.getActiveUserById.mockResolvedValue(user);
+        status: 'suspended'
+      })
+      repository.getActiveUserById.mockResolvedValue(user)
 
-      const result = service.getUserById(1);
+      const result = service.getUserById(1)
 
-      expect(result).toEqual(null);
-    });
-  });
-});
+      expect(result).toEqual(null)
+    })
+  })
+})
 ```
 
 In my experience, a common mistake made by developers who are new to unit testing, is to introduce branches into their test cases. This is generally for one of two reasons:
@@ -582,20 +584,19 @@ The following test attempts to cover both of the scenarios from the above exampl
 describe('UserService', () => {
   describe('getUserById', () => {
     it('should return an active user or null', () => {
-      const user = userFactory.build({ id: 1 });
-      repository.getActiveUserById.mockResolvedValue(user);
+      const user = userFactory.build({ id: 1 })
+      repository.getActiveUserById.mockResolvedValue(user)
 
-      const result = service.getUserById(1);
+      const result = service.getUserById(1)
 
       if (user.status === 'active') {
-        expect(result).toEqual(user);
+        expect(result).toEqual(user)
+      } else {
+        expect(result).toEqual(null)
       }
-      else {
-        expect(result).toEqual(null);
-      }
-    });
-  });
-});
+    })
+  })
+})
 ```
 
 Because `userFactory` is deterministic (it will produce the same value on consecutive runs), our test will only ever cover a single branch. At a glance, it is impossible to tell which scenario is covered by the test, and worse still, it implies that both code paths are covered, giving us a false sense of security.
@@ -609,28 +610,27 @@ describe('UserService', () => {
   describe('getUserById', () => {
     it.each`
       status           shouldReturnNull
-      ${'active'}      ${false}
-      ${'suspended'}   ${true}
-      ${'banned'}      ${true}
-      ${'onboarding'}  ${true}
+      ${'active'}                       | ${false}
+      ${'suspended'}                    | ${true}
+      ${'banned'}                       | ${true}
+      ${'onboarding'}                   | ${true}
     `('should return an active user or null', (status, shouldReturnNull) => {
       const user = userFactory.build({
         id: 1,
-        status,
-      });
-      repository.getActiveUserById.mockResolvedValue(user);
+        status
+      })
+      repository.getActiveUserById.mockResolvedValue(user)
 
-      const result = service.getUserById(1);
+      const result = service.getUserById(1)
 
       if (shouldReturnNull) {
-        expect(result).toEqual(null);
+        expect(result).toEqual(null)
+      } else {
+        expect(result).toEqual(user)
       }
-      else {
-        expect(result).toEqual(user);
-      }
-    });
-  });
-});
+    })
+  })
+})
 ```
 
 The above test works well and covers our code much more thoroughly than the original implementation. However, it's still harder to read and understand due to the conditional logic. We can refactor it as follows to improve readability, while still maintaining the tests coverage.
@@ -640,14 +640,14 @@ describe('UserService', () => {
   it('should return an active user', () => {
     const user = userFactory.build({
       id: 1,
-      status: 'active',
-    });
-    repository.getActiveUserById.mockResolvedValue(user);
+      status: 'active'
+    })
+    repository.getActiveUserById.mockResolvedValue(user)
 
-    const result = service.getUserById(1);
+    const result = service.getUserById(1)
 
-    expect(result).toEqual(user);
-  });
+    expect(result).toEqual(user)
+  })
 
   describe('getUserById', () => {
     it.each`
@@ -658,16 +658,16 @@ describe('UserService', () => {
     `('should return null if users status is not active', (status) => {
       const user = userFactory.build({
         id: 1,
-        status,
-      });
-      repository.getActiveUserById.mockResolvedValue(user);
+        status
+      })
+      repository.getActiveUserById.mockResolvedValue(user)
 
-      const result = service.getUserById(1);
+      const result = service.getUserById(1)
 
-      expect(result).toEqual(null);
-    });
-  });
-});
+      expect(result).toEqual(null)
+    })
+  })
+})
 ```
 
 ### Test Execution Time
@@ -692,35 +692,35 @@ Take the following function and test case:
 
 ```ts
 function add(a: number, b: number) {
-  return a + b;
+  return a + b
 }
 
 describe('add', () => {
   it('should add two numbers', () => {
-    const result = add(0, 0);
+    const result = add(0, 0)
 
-    expect(result).toEqual(0);
-  });
-});
+    expect(result).toEqual(0)
+  })
+})
 ```
 
 This test does well in many of the metrics we've discussed above, such as cyclomatic complexity, and code coverage. However, it's not a very effective test. To understand why, lets look at some mutations which might be applied during a code mutation test.
 
 ```ts
 function add(a: number, b: number) {
-  return a;
+  return a
 }
 
 function add(a: number, b: number) {
-  return b;
+  return b
 }
 
 function add(a: number, b: number) {
-  return 0;
+  return 0
 }
 
 function add(a: number, b: number) {
-  return "0";
+  return '0'
 }
 ```
 
@@ -729,11 +729,11 @@ Our test would only catch the last mutation, giving it a mutation survival rate 
 ```ts
 describe('add', () => {
   it('should add two numbers', () => {
-    const result = add(30, 12);
+    const result = add(30, 12)
 
-    expect(result).toEqual(42);
-  });
-});
+    expect(result).toEqual(42)
+  })
+})
 ```
 
 Our modified test now has a mutation survival rate of 0% - at least for the mutations we've chosen to apply.

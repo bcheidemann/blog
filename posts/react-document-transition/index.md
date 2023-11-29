@@ -21,11 +21,11 @@ In summary, the proposal consists of a few different JavaScript and CSS APIs whi
 The main API we're interested in is the `document.createDocumentTransition` API. This can be used as follows:
 
 ```ts
-let transition = document.createDocumentTransition();
+let transition = document.createDocumentTransition()
 
 await transition.start(async () => {
-    await updateTheDom();
-});
+  await updateTheDom()
+})
 ```
 
 This, by default, will cause the whole page to be cross-faded. We can build upon this by telling the browser to individually track certain elements using CSS.
@@ -51,26 +51,26 @@ I've recently been playing about with Svelte and SvelteKit, which make animation
 Turns out, that it's not too hard! This is the solution I came up with:
 
 ```ts
-import { useState } from "react";
-import { flushSync } from "react-dom";
+import { useState } from 'react'
+import { flushSync } from 'react-dom'
 
 export function useTransitionState(initialState) {
-  const [state, setStateInternal] = useState(initialState);
+  const [state, setStateInternal] = useState(initialState)
 
   const setState = async (value) => {
     if (!document.createDocumentTransition) {
-      return setStateInternal(value);
+      return setStateInternal(value)
     }
-    const transition = document.createDocumentTransition();
-    flushSync(() => void(0));
+    const transition = document.createDocumentTransition()
+    flushSync(() => void 0)
     await transition.start(() => {
       flushSync(() => {
-        setStateInternal(value);
-      });
-    });
-  };
+        setStateInternal(value)
+      })
+    })
+  }
 
-  return [state, setState];
+  return [state, setState]
 }
 ```
 
@@ -85,75 +85,81 @@ You may have noticed the use of `flushSync`. This achieves two things. The first
 So let's see how we might use this hook to create the above ToDo list:
 
 ```tsx
-import { useTransitionState } from 'react-document-transition';
-import './App.css';
+import { useTransitionState } from 'react-document-transition'
+import './App.css'
 
 type TodoItem = {
-  name: string;
-  done: boolean;
+  name: string
+  done: boolean
 }
 
 type TodoListState = {
-  items: TodoItem[],
+  items: TodoItem[]
 }
 
-function Item(item: TodoItem & { toggle: (item: TodoItem) => void}) {
-  const slug = item.name.replaceAll(" ", "-").toLowerCase();
+function Item(item: TodoItem & { toggle: (item: TodoItem) => void }) {
+  const slug = item.name.replaceAll(' ', '-').toLowerCase()
 
   return (
     <div
       onClick={() => item.toggle(item)}
       className={`item ${item.done ? 'done' : ''}`}
-      style={{
-        pageTransitionTag: slug,
-      } as React.CSSProperties}
+      style={
+        {
+          pageTransitionTag: slug
+        } as React.CSSProperties
+      }
     >
       <h1>{item.name}</h1>
     </div>
-  );
+  )
 }
 
 function App() {
   const [state, setState] = useTransitionState<TodoListState>({
     items: [
-      { done: false, name: "Buy Milk" },
-      { done: false, name: "Publish NPM Package" },
-      { done: false, name: "Become Rich and Famous" },
-      { done: true, name: "Pay Rent" },
-      { done: true, name: "Create React Document Transition Hook" },
-    ],
-  });
+      { done: false, name: 'Buy Milk' },
+      { done: false, name: 'Publish NPM Package' },
+      { done: false, name: 'Become Rich and Famous' },
+      { done: true, name: 'Pay Rent' },
+      { done: true, name: 'Create React Document Transition Hook' }
+    ]
+  })
 
   function toggle(item: TodoItem) {
-    let items: TodoItem[] = Array.from(state.items);
+    let items: TodoItem[] = Array.from(state.items)
 
-    const foundItem = items.find(maybeItem => maybeItem.name === item.name);
+    const foundItem = items.find((maybeItem) => maybeItem.name === item.name)
     if (foundItem) {
-      foundItem.done = !foundItem.done;
+      foundItem.done = !foundItem.done
     }
-    
+
     setState({
-      items,
-    });
+      items
+    })
   }
 
   return (
     <div className="App">
       <div className="todo-col">
-        {state.items.filter(item => !item.done).map((item) => (
-          <Item {...item} toggle={toggle} key={item.name} />
-        ))}
+        {state.items
+          .filter((item) => !item.done)
+          .map((item) => (
+            <Item {...item} toggle={toggle} key={item.name} />
+          ))}
       </div>
       <div className="done-col">
-        {state.items.filter(item => item.done).map((item) => (
-          <Item {...item} toggle={toggle} key={item.name} />
-        ))}
+        {state.items
+          .filter((item) => item.done)
+          .map((item) => (
+            <Item {...item} toggle={toggle} key={item.name} />
+          ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 You will notice here, that of the 69 lines of code needed to implement this UI, only four lines are actually controlling the animation:

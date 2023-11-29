@@ -39,10 +39,6 @@ module.exports = {
                 marginTop: '0 !important',
                 marginBottom: '0 !important'
               },
-              li: {
-                marginTop: '0 !important',
-                marginBottom: '0 !important'
-              },
               img: {
                 marginLeft: 'auto',
                 marginRight: 'auto'

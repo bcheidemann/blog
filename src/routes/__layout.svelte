@@ -4,7 +4,7 @@
   import 'focus-visible'
   import MoonIcon from 'heroicons-svelte/solid/MoonIcon.svelte'
   import SunIcon from 'heroicons-svelte/solid/SunIcon.svelte'
-  import { browser } from '$app/env'
+  import { browser, dev } from '$app/env'
   import { name } from '$lib/info'
 
   let prefersLight = browser ? Boolean(JSON.parse(localStorage.getItem('prefersLight'))) : false
@@ -51,5 +51,41 @@
     >
       <slot />
     </main>
+    <hr />
+    <footer class="mt-8 opacity-70">
+      <div class="flex justify-between px-4 py-2 gap-x-8 flex-col-reverse md:flex-row">
+        <div class="text-xl mb-8">
+          <h2 class="text-xl mb-2">Privacy Policy</h2>
+          <p class="text-sm text-justify md:text-xs">
+            Ben Heidemann Limited does not track, store or utilise any information relating to
+            your visit to this website. The website may contain links to other websites run by other
+            organisations. This Privacy Notice applies only to our website, so we encourage you to
+            read the privacy statements on the other websites you visit. We cannot be responsible
+            for the privacy policies and practices of other sites even if you access them using
+            links from our website. In addition, if you linked to our website from a third-party
+            site, we cannot be responsible for the privacy policies and practices of the owners and
+            operators of that third-party site and recommend that you check the Privacy Notice of
+            that third-party site.
+          </p>
+        </div>
+        <div class="min-w-max mb-8">
+          <h2 class="text-xl mb-2">Contact Details</h2>
+          <address class="mb-2">
+            0/2 23 Bolton Drive
+            <br />
+            Glasgow
+            <br />
+            G42 9DX
+            <br />
+          </address>
+          <a href="tel:+447472564288">tel: +44 7472 564288</a>
+          <br />
+          <a href="mailto:ben@heidemann.dev">email: ben@heidemann.dev</a>
+        </div>
+      </div>
+      <div class="text-right opacity-70 text-xs sm:text-sm m-4">
+        © Copyright Ben Heidemann Limited All Rights Reserved
+      </div>
+    </footer>
   </div>
 </div>

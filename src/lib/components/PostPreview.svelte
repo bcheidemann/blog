@@ -6,7 +6,7 @@
   export let small = false
 </script>
 
-<article class="flex flex-col" aria-labelledby="article-title">
+<article class="flex flex-col max-w-full" aria-labelledby="article-title">
   <div>
     {#if !small}
       <h3 class="!mt-0 !mb-2" id="article-title">
@@ -19,9 +19,9 @@
     {/if}
     <div class="flex gap-x-4 gap-y-4 flex-wrap justify-between opacity-70">
       <span class="text-xl truncate">{post.readingTime}</span>
-      <div class="flex wrap">
+      <div class="flex flex-wrap max-w-full">
         {#each post.categories as category}
-          <span class="mr-2 px-4 py-1 shadow-md shadow-slate-400 dark:shadow-black rounded-full bg-slate-500 text-white text-sm truncate">
+          <span class="mr-2 mb-2 px-4 py-1 shadow-md shadow-slate-400 dark:shadow-black rounded-full bg-slate-500 text-white text-sm truncate">
             {category}
           </span>
         {/each}

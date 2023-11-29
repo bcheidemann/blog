@@ -33,25 +33,21 @@ The below is a screenshot of the benchmark application, followed by the relevant
 ![Screenshot of Rendered Site](./site.png)
 
 ```tsx
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import express from 'express';
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import express from 'express'
 
-import { db } from './database/client.ts';
-import { UsersTable } from './database/schema.ts';
+import { db } from './database/client.ts'
+import { UsersTable } from './database/schema.ts'
 
 async function Table() {
-  const userRecords = await db
-    .select()
-    .from(UsersTable)
-    .limit(100)
-    .execute();
-  
+  const userRecords = await db.select().from(UsersTable).limit(100).execute()
+
   const users = userRecords.map((user) => ({
     id: user.id,
     name: user.firstName + ' ' + user.lastName,
-    age: (new Date().getTime() - new Date(user.dateOfBirth!).getTime()) / 1000 / 60 / 60 / 24 / 365,
-  }));
+    age: (new Date().getTime() - new Date(user.dateOfBirth!).getTime()) / 1000 / 60 / 60 / 24 / 365
+  }))
 
   return (
     <>
@@ -76,17 +72,17 @@ async function Table() {
         </tbody>
       </table>
     </>
-  );
+  )
 }
 
-const app = express();
+const app = express()
 
 app.get('/', async (req, res) => {
   const html = renderToString(
     <html>
       <head>
         <title>Javascript Runtime Benchmark</title>
-        <meta charSet='utf-8'></meta>
+        <meta charSet="utf-8"></meta>
         <style>
           {`
             table {
@@ -105,51 +101,46 @@ app.get('/', async (req, res) => {
         </style>
       </head>
       <body>
-        <main style={{
-          margin: '0 auto',
-          maxWidth: '800px',
-          padding: '20px',
-          backgroundColor: '#eee',
-          borderRadius: '4px',
-          textAlign: 'center',
-          boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 12px',
-        }}>
+        <main
+          style={{
+            margin: '0 auto',
+            maxWidth: '800px',
+            padding: '20px',
+            backgroundColor: '#eee',
+            borderRadius: '4px',
+            textAlign: 'center',
+            boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 12px'
+          }}
+        >
           <h1 style={{ fontSize: '20px' }}>JavaScript Runtime Performance Benchmark</h1>
           <p style={{ fontSize: '16px', padding: '0 40px' }}>
-            This is a simple server side rendered React app.
-            It renders a table with 100 rows and 2 columns.
-            The table is generated on the server and sent to
-            the client as HTML. The data displayed in the table
-            is randomly generated on the server, using a Promise
-            to simulate a network request. This is a very simple
-            benchmark to compare the performance of different
-            JavaScript runtimes.
+            This is a simple server side rendered React app. It renders a table with 100 rows and 2
+            columns. The table is generated on the server and sent to the client as HTML. The data
+            displayed in the table is randomly generated on the server, using a Promise to simulate
+            a network request. This is a very simple benchmark to compare the performance of
+            different JavaScript runtimes.
           </p>
           {await Table()}
         </main>
       </body>
     </html>
-  );
-  res.send(html);
-});
+  )
+  res.send(html)
+})
 
-app.listen(3000, () => console.log('Listening on http://0.0.0.0:3000'));
+app.listen(3000, () => console.log('Listening on http://0.0.0.0:3000'))
 ```
 
 Garbage collection was identified as being a potential differentiator between the runtimes, with Node and Deno using a different JavaScript engine ([v8](https://v8.dev/)) than Bun (which uses [JavaScriptCore](https://developer.apple.com/documentation/javascriptcore)). For this reason, the application was designed to produce garbage in a way that is typical for React applications. This was done by mapping over the user records, calculating their age from the date of birth column. The relevant code is highlighted below.
 
 ```tsx
-  const userRecords = await db
-    .select()
-    .from(UsersTable)
-    .limit(100)
-    .execute();
+const userRecords = await db.select().from(UsersTable).limit(100).execute()
 
-  const users = userRecords.map((user) => ({
-    id: user.id,
-    name: user.firstName + ' ' + user.lastName,
-    age: (new Date().getTime() - new Date(user.dateOfBirth!).getTime()) / 1000 / 60 / 60 / 24 / 365,
-  }));
+const users = userRecords.map((user) => ({
+  id: user.id,
+  name: user.firstName + ' ' + user.lastName,
+  age: (new Date().getTime() - new Date(user.dateOfBirth!).getTime()) / 1000 / 60 / 60 / 24 / 365
+}))
 ```
 
 ## Results
