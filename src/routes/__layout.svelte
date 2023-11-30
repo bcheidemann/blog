@@ -52,10 +52,10 @@
       <slot />
     </main>
     <hr />
-    <footer class="mt-8 opacity-70">
-      <div class="flex justify-between px-4 py-2 gap-x-8 flex-col-reverse md:flex-row">
-        <div class="text-xl mb-8">
-          <h2 class="text-xl mb-2">Privacy Policy</h2>
+    <footer class="prose prose-slate prose-sm sm:prose sm:prose-slate sm:prose-ms sm:max-w-none dark:prose-invert flex flex-col w-full flex-grow px-4 pb-4 mx-auto opacity-70">
+      <div class="flex justify-between gap-x-8 flex-col-reverse md:flex-row">
+        <div>
+          <h2 class="mb-2">Privacy Policy</h2>
           <p class="text-sm text-justify md:text-xs">
             Ben Heidemann Limited does not track, store or utilise any information relating to
             your visit to this website. The website may contain links to other websites run by other
@@ -68,9 +68,9 @@
             that third-party site.
           </p>
         </div>
-        <div class="min-w-max mb-8">
-          <h2 class="text-xl mb-2">Contact Details</h2>
-          <address class="mb-2">
+        <div class="min-w-max">
+          <h2>Contact Details</h2>
+          <address>
             0/2 23 Bolton Drive
             <br />
             Glasgow
@@ -83,7 +83,7 @@
           <a href="mailto:ben@heidemann.dev">email: ben@heidemann.dev</a>
         </div>
       </div>
-      <div class="text-right opacity-70 text-xs sm:text-sm m-4">
+      <div class="text-right opacity-70 text-xs sm:text-sm mt-6 sm:mt-10">
         © Copyright Ben Heidemann Limited All Rights Reserved
       </div>
     </footer>
