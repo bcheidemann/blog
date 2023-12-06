@@ -116,6 +116,7 @@ Other sources of personal data which Ben Heidemann Limited may be required to pr
 
 - Contracts
 - Financial records
+- Other administrative documents
 
 ### Internal use
 
