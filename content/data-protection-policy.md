@@ -138,12 +138,12 @@ Where personal data is transferred to third parties, they will be required to ma
 
 Ben Heidemann Limited takes all reasonable steps to minimise and prevent data breaches. In the event of a data breach occurring, thorough records of the data breach will be maintained. Where a data breach meets the threshold for reporting, it will be reported to the Information Commissioner's Office (ICO) within 72 hours. Where the breach affects individuals or third parties, these will also be informed.
 
+Any individuals acting on behalf of Ben Heidemann Limited are required to report any data breaches or suspected data breaches to Ben Heidemann immediately and must also keep any evidence they hold in relation to the breach.
+
 ## Data Protection Officer
 
 Under UK law, Ben Heidemann Limited is not required to appoint a Data Protection Officer (DPO). Compliance with the United Kingdom General Data Protection Regulation (UK GDPR) and Data Protection Act (DPA) 2018 is monitored by the company directors. In leu of an appointed Data Protection Officer, any data breaches or concerns around data protection should be reported directly to Ben Heidemann.
 
 ## Updates to the policy
 
-This policy is regularly reviewed and updated to reflect changes in legal requirements, industry practices, and the companies data processing activities. Any agents acting on behalf of the company will be notified of significant changes to this document, and are required to stay up to date with any such changes.
-
-Any individuals acting on behalf of Ben Heidemann Limited are required to report any data breaches or suspected data breaches to Ben Heidemann immediately and keep any evidence they may hold in relation to the breach.
+This policy is regularly reviewed and updated to reflect changes in legal requirements, industry practices, and the companies data processing activities. Any agents acting on behalf of the company will be notified of significant changes to this document, and are required to stay up to date with any such changes. Any organisations or individuals with which Ben Heidemann Limited is conducting business will be promptly notified of any changes relevant to them.
