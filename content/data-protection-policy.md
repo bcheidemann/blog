@@ -112,6 +112,11 @@ Dependent on the agreement between Ben Heidemann Limited and _The Company_, acti
 
 For example, these details may be required to submit invoices or other documents to _The Company_.
 
+Other sources of personal data which Ben Heidemann Limited may be required to process include:
+
+- Contracts
+- Financial records
+
 ### Internal use
 
 Ben Heidemann Limited may collect certain personally identifying information for legal and compliance reasons, and in order to conduct its business. This includes the names, contact details, and roles of individuals acting on behalf of the company in any capacity. For example, this may include the personal details of the directors of the company.
