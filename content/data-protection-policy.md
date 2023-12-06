@@ -128,10 +128,11 @@ Personal data may under limited circumstances be shared with third parties. This
 
 - In compliance with UK laws and law enforcement
 - When using third parties to securely store and manage data (e.g. accounting software or email services)
+- To aid third parties in the provision of services to Ben Heidemann Limited
 
 Additionally, the personal data of individuals acting on behalf of Ben Heidemann Limited, such as names and contact details of the directors, may occasionally be shared with third parties to which Ben Heidemann Limited is, or is intending to, provide services, or to to third parties providing services to Ben Heidemann Limited.
 
-Where personal data is transferred to third parties, they will be required to maintain compliance with UK laws in their processing of this data. This includes complying with the United Kingdom General Data Protection Regulation (UK GDPR) and Data Protection Act (DPA) 2018.
+Where personal data is transferred to third parties, they will be required to maintain compliance with UK laws in their processing of this data. This includes complying with the United Kingdom General Data Protection Regulation (UK GDPR) and Data Protection Act (DPA) 2018. Wherever possible, personal data will anonymised before being transferred to third parties.
 
 ## Data breaches
 
