@@ -1,6 +1,5 @@
 <script context="module">
   import bio from "../../content/bio.md"
-  import content from "../../content/content.md"
 
   export const prerender = true
 
@@ -27,7 +26,7 @@
 
 <div class="flex flex-col flex-grow">
   <!-- Biography -->
-  <section class="flex flex-col items-center justify-center text-xl text-center">
+  <section class="flex flex-col justify-center text-justify text-xl [&>h2]:text-center [&>ul]:text-left">
     <svelte:component this={bio} />
   </section>
 
@@ -37,7 +36,7 @@
   <section>
     <span class="flex items-baseline gap-4">
       <h1>
-        <a href="#recent-posts" id="recent-posts">Recent Posts</a>
+        <a href="#recent-posts" id="recent-posts">Recent Articles</a>
       </h1>
       <ButtonLink href="/posts" size="medium" raised={false} class="opacity-60">View All</ButtonLink>
     </span>
@@ -48,12 +47,5 @@
         </li>
       {/each}
     </ul>
-  </section>
-
-  <hr />
-
-  <!-- Page Content -->
-  <section class="flex flex-col items-center justify-center text-xl mb-8 mt-16 text-center">
-    <svelte:component this={content} />
   </section>
 </div>

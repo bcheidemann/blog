@@ -85,11 +85,16 @@
     </a>
   </h1>
   <div class="mt-4 opacity-70">
+    <span class="text-xl truncate">Author | Ben Heidemann</span>
+  </div>
+  <div class="mt-4 opacity-70">
     <div class="flex gap-x-4 gap-y-4 flex-wrap justify-between opacity-70">
       <span class="text-xl truncate">{readingTime}</span>
       <div class="flex wrap">
         {#each categories as category}
-          <span class="mr-2 px-4 py-1 shadow-md shadow-slate-400 dark:shadow-black rounded-full bg-slate-500 text-white text-sm truncate">
+          <span
+            class="mr-2 px-4 py-1 shadow-md shadow-slate-400 dark:shadow-black rounded-full bg-slate-500 text-white text-sm truncate"
+          >
             {category}
           </span>
         {/each}

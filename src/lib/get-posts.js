@@ -50,7 +50,7 @@ const posts = Object.entries(import.meta.globEager('/posts/**/*.md'))
     const parsedHtml = parse(post.component.render().html)
 
     // Use the custom preview in the metadata, if availabe, or the first paragraph of the post for the preview
-    const preview = post.customPreview? post.customPreview : parsedHtml.querySelector('p')
+    const preview = post.customPreview ? post.customPreview : parsedHtml.querySelector('p')
 
     return {
       ...post,

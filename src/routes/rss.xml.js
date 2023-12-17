@@ -6,7 +6,7 @@ import { getPosts } from '$lib/get-posts'
 import { name, website } from '$lib/info'
 
 // update this to something more appropriate for your website
-const websiteDescription = `${name}'s blog`
+const websiteDescription = `${name} blog`
 const postsUrl = `${website}/posts`
 
 /**
