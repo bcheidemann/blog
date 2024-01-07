@@ -1,5 +1,4 @@
 import { browser } from '$app/env'
-import { format } from 'date-fns'
 import { parse } from 'node-html-parser'
 import readingTime from 'reading-time/lib/reading-time.js'
 
@@ -72,8 +71,3 @@ const posts = Object.entries(import.meta.globEager('/posts/**/*.md'))
     next: allPosts[index - 1],
     previous: allPosts[index + 1]
   }))
-
-function addTimezoneOffset(date) {
-  const offsetInMilliseconds = new Date().getTimezoneOffset() * 60 * 1000
-  return new Date(new Date(date).getTime() + offsetInMilliseconds)
-}
