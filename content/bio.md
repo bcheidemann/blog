@@ -13,6 +13,7 @@ We offer a comprehensive range of software development services designed to empo
 - **Cloud Services** - Leveraging cloud technologies for enhanced scalability, security, and efficiency.
 - **Quality Assurance** - Rigorous testing and debugging to guarantee software reliability and optimal performance.
 - **UI Design** - Designing visually appealing and user-centric interfaces for an outstanding user experience.
+- **Presenting/Education** - Empowering teams to deliver higher quality software by providing educational presentations on advanced technical concepts. See slides for presentations I've given [here](https://slides.heidemann.dev/).
 
 ## Experience & Expertise
 
