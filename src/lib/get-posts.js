@@ -24,7 +24,7 @@ export function getPosts({ page = 1, limit } = {}) {
 }
 
 // Get all posts and add metadata
-const posts = Object.entries(import.meta.globEager('/posts/**/*.md'))
+const posts = Object.entries(import.meta.globEager('/posts/**/index.md'))
   .map(([filepath, post]) => {
     return {
       ...post.metadata,
