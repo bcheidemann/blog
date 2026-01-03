@@ -1,5 +1,5 @@
 <script context="module">
-  import policy from "../../../content/myweightlogbook-privacy-policy.md"
+  import policy from "../../content/my-weight-logbook-privacy-policy.md"
 
   export const prerender = true
 </script>
